@@ -1,34 +1,36 @@
 let inp = require('readline-sync');
 
 let start = true;
+let messages = JSON.parse()
+
 function prompt(txt) { console.log(`=> ${txt}\n`) }
 
 function isValid(type) {
 	switch (type) {
 		case 'number':
 			while (true) {
-				val = inp.question(prompt('write a number '))
-				if (/(^\d+$)|(^\d+\.\d+$)|(^\d+\.\d+$)/.test(val)) {
+				val = inp.question(prompt(messages.writeNum))
+				if (/\-\d+\.?\d*/.test(val)) {
 					return Number(val)
 				} else {
-					'write proper number'
+					prompt(messages.warningNum);
 				}
 			}
 			break
 		case 'operand':
 			while (true) {
 				val = inp.question(prompt('write operand + - * \/ '))
-				if (['+', '-', '*', '/'].includes(val)) {
+				if (/^[+\-\*\/]$/.test(val)) {
 					return val
 				} else {
-					'write proper arithmetic operand'
+					prompt(messages.warningOperator)
 				}
 			}
 			break;
 		case 'choice':
 			while (true) {
 				val = inp.question(prompt('do you want continue y/n'))
-				if (['y', 'Y', 'n', 'N'.includes(val)]) {
+				if ([/[YyNn]/.test(val)]) {
 					['Y', 'y'].includes(val) ? start = true : start = false;
 					break
 				} else {
@@ -36,14 +38,11 @@ function isValid(type) {
 				}
 			}
 			break;
-		default:
-			prompt('no valid type was given to function')
 	}
 }
 
 while (start) {
-	prompt('welcome to magnificent calc');
-	prompt('To get result follow the instuctions');
+	prompt(messages.welcomeGreet);
 	let operand1 = isValid('number');
 	let operand2 = isValid('number');
 	let arithmetic = isValid('operand');
