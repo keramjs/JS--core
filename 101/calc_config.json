@@ -1,7 +1,16 @@
 {
-	"welcomeGreet": "Welcome to calc",
-	"instruction": "Please follow the instruction.",
-	"writeNum": "Write a number ",
-	"warningNum": "Write a proper number",
-	"warningOperator": "Write proper arithmetic operator"
+	"englich": {
+		"welcomeGreet": "Welcome to calc",
+		"instruction": "Please follow the instruction.",
+		"writeNum": "Write a number ",
+		"warningNum": "Write a proper number",
+		"warningOperator": "Write proper arithmetic operator"
+	},
+	"china": {
+		"welcomeGreet": "xxxxxxxxxxxx",
+		"instruction": "xxxxxxxxxxxxxx",
+		"writeNum": "xxxxxxxxxxxxx",
+		"warningNum": "xxxxxxxxxx",
+		"warningOperator": "xxxxxxxxxxxxxxxxxxx"
+	}
 }

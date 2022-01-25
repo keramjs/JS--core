@@ -43,9 +43,13 @@ function isValid(type) {
 			break;
 	}
 }
+function pickLanguage() {
+	// ask user for lang
 
+}
 while (start) {
 	prompt(messages.welcomeGreet);
+	pickLanguage();
 	let operand1 = isValid('number');
 	let operand2 = isValid('number');
 	let arithmetic = isValid('operand');
