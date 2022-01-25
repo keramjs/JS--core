@@ -1,7 +1,10 @@
-let inp = require('readline-sync');
+const inp = require('readline-sync');
+const fs = require('fs');
+const path = require('path');
 
 let start = true;
-let messages = JSON.parse()
+let rd = fs.readFileSync(path.resolve(__dirname, 'calc_config.json'));
+let messages = JSON.parse(rd)
 
 function prompt(txt) { console.log(`=> ${txt}\n`) }
 
@@ -10,7 +13,7 @@ function isValid(type) {
 		case 'number':
 			while (true) {
 				val = inp.question(prompt(messages.writeNum))
-				if (/\-\d+\.?\d*/.test(val)) {
+				if (/\-?\d+\.?\d*?/.test(val)) {
 					return Number(val)
 				} else {
 					prompt(messages.warningNum);
@@ -46,6 +49,6 @@ while (start) {
 	let operand1 = isValid('number');
 	let operand2 = isValid('number');
 	let arithmetic = isValid('operand');
-	prompt(`resoult is ${eval(Number(operand1) + arithmetic + Number(operand2))}`);
+	prompt(`result is ${eval(Number(operand1) + arithmetic + Number(operand2))}`);
 	let choice = isValid('choice')
 }
