@@ -4,7 +4,8 @@ const path = require('path');
 
 let start = true;
 let rd = fs.readFileSync(path.resolve(__dirname, 'calc_config.json'));
-let messages = JSON.parse(rd)
+let dict = JSON.parse(rd)
+let messages
 
 function prompt(txt) { console.log(`=> ${txt}\n`) }
 
@@ -22,7 +23,7 @@ function isValid(type) {
 			break
 		case 'operand':
 			while (true) {
-				val = inp.question(prompt('write operand + - * \/ '))
+				val = inp.question(prompt(messages.writeOperand));
 				if (/^[+\-\*\/]$/.test(val)) {
 					return val
 				} else {
@@ -32,24 +33,35 @@ function isValid(type) {
 			break;
 		case 'choice':
 			while (true) {
-				val = inp.question(prompt('do you want continue y/n'))
-				if ([/[YyNn]/.test(val)]) {
-					['Y', 'y'].includes(val) ? start = true : start = false;
-					break
+				val = inp.question(prompt(messages.continue));
+				if (/[YyNn]/.test(val)) {
+					/[yY]/.test(val) ? start = true : start = false;
+					break;
 				} else {
-					prompt('write y or n')
+					prompt(messages.warningContinue);
+				}
+			}
+			break;
+		case 'lang':
+			while (true) {
+				language = inp.question(prompt('choose your language eng/chin'));
+				if (/eng|chin/.test(language)) {
+					if (language === 'eng') {
+						return dict['english'];
+					} else {
+						return dict['chinesse'];
+					}
+				} else {
+					prompt('wrong language try again you have to pick eng or chin')
 				}
 			}
 			break;
 	}
 }
-function pickLanguage() {
-	// ask user for lang
 
-}
 while (start) {
-	prompt(messages.welcomeGreet);
-	pickLanguage();
+	prompt(dict.english.welcomeGreet);
+	messages = isValid('lang');
 	let operand1 = isValid('number');
 	let operand2 = isValid('number');
 	let arithmetic = isValid('operand');

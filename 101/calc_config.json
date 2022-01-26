@@ -1,15 +1,21 @@
 {
-	"englich": {
+	"english": {
 		"welcomeGreet": "Welcome to calc",
 		"instruction": "Please follow the instruction.",
 		"writeNum": "Write a number ",
+		"writeOperand": "Write arithmetic operator +-*/ ",
+		"continue": "Do you want to continue y/n ?",
+		"warningContinue": "write y or n",
 		"warningNum": "Write a proper number",
 		"warningOperator": "Write proper arithmetic operator"
 	},
-	"china": {
+	"chinesse": {
 		"welcomeGreet": "xxxxxxxxxxxx",
 		"instruction": "xxxxxxxxxxxxxx",
 		"writeNum": "xxxxxxxxxxxxx",
+		"writeOperand": "xxx x xx x ",
+		"continue": "xx xx xx xxx",
+		"warningContinue": "xxx xx xx",
 		"warningNum": "xxxxxxxxxx",
 		"warningOperator": "xxxxxxxxxxxxxxxxxxx"
 	}
