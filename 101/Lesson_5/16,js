@@ -1,0 +1,10 @@
+let arr = [['a', 1], ['b', 'two'], ['sea', {'c': 3}], ['D', ['a', 'b', 'c']]];
+
+// expected value of object
+// { a: 1, b: 'two', sea: { c: 3 }, D: [ 'a', 'b', 'c' ] }
+
+newObj = arr.reduce((acc, elem)=>{
+    acc[elem[0]] = elem[1]
+    return acc
+},{})
+console.log(newObj)
