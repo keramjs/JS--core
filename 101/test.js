@@ -1,2 +1,12 @@
-let arr = [1, 2, 3, 4, 5, 6, 7, 8];
-console.log(arr.filter(x => Number.isInteger(x / 2)).length)
+let obj = {
+  first: ['the', 'quick'],
+  second: ['brown', 'fox'],
+  third: ['jumped'],
+  fourth: ['over', 'the', 'lazy', 'dog'],
+};
+
+Object.keys(obj).forEach(key => Object.values(obj[key]).forEach(word => word.split('').forEach(letter => {
+  if ('aoeiu'.includes(letter)) {
+    console.log(letter)
+  }
+})))
