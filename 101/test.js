@@ -1,2 +1,12 @@
-let arr = [1, 2, 3, 4, 5, 6, 7, 8];
-console.log(arr.filter(x => Number.isInteger(x / 2)).length)
+/*
+1 - c 
+2 - c
+3 - c,d
+4 - a, d ?
+5 - c, d ?
+6 - a,       x
+7 - b albo d xxx
+
+
+
+*/
