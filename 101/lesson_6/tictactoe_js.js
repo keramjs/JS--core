@@ -1,9 +1,10 @@
 /*
-- player 1 wybiera znak
-- drugi znak jest przyznawany automatycznie plyerowi 2
-- losowanie kto zaczyna pierwszy
+- wiadomosc powitalna
 - wyswietlenie planszy
 - ruch pierwszego gracza
+  - gracz wybiera field oraz square
+    - o ile field  nie jest zajete 
+      - wtedy kiedy jest wygrane - lub zremisowane - w arrayu nie ma markera ' '
 - sprawdzenie wygranej
 - aktualizacja planszy
 - ruch drugiego gracza
@@ -11,49 +12,71 @@
 - aktualizacja planszy
 
 */
-const readline = require(readline-sync);
-const playerOneMarker = 'X';
-const playerTworMArker = 'O';
+const readline = require("readline-sync");
+const playerOneMarker = "X";
+const playerTworMArker = "O";
 
 let fields = [[], [], [], [], [], [], [], [], []];
 
-function welcomeMessage(){
-    console.log("Welcome to ultimate tic tac toe")
-    console.log("First you pick field then squere where you put your mark.")
-    console.log("Your mark marks field that your oponent makes mark.")
-    console.log("If Field is won or full you can pick different field to put your mark.")
+function welcomeMessage() {
+  console.log("Welcome to ultimate tic tac toe");
+  console.log("First you pick field then squere where you put your mark.");
+  console.log("Your mark marks field that your oponent makes mark.");
+  console.log(
+    "If Field is won or full you can pick different field to put your mark."
+  );
 }
 
-function playerInput(move = true, field = true) {
-  let fld;
+function playerInput(fieldPick = true, field, playerMarker) {
+  let fld = field;
   let square;
-  if (move) {
-    if (field) {
-      do {
-        fld = readline.question('pick field 0-9-> ');
-      } while (!(/^\d$/.test(fld)));
+
+  if (fieldPick) {
+    while (true) {
+      fld = readline.question("Pick field 0-8-> ");
+
+      if (!(/^\d$/.test(fld))){
+        console.log("Enter number between 0 and 8");
+        continue;
+      }else{
+        fld = Number(fld);
+      }
+
+      if ( fld < 0 || fld > 8) {
+        console.log("Number out of range - Enter number between 0 and 8");
+        continue;
+      }
+
+      if (!(fields[fld].some((element) => element === " "))) {
+        console.log("This field is already taken , pick again");
+        continue;
+      }
+      break;
+    }
+  }
+
+  while (true) {
+    square = readline.question("Pick square 0-8-> ");
+    if (!(/^\d$/.test(square))){
+      console.log("Enter number between 0 and 8");
+      continue;
+    }else{
+      square = Number(square)
     }
 
-    do {
-      square = readline.question('pick square 0-9->');
-    } while (!(/^\d$/.test(square)));
-
-    return [fld, square]
-  } else {
-    do {
-      answer = readline.question('choose Yes or No  y/n ->')
-    } while (!(/^y|n$/.test(answer)))
-    return answer
+    if (square < 0 && square > 8) {
+      console.log("Number out of range - Enter number between 0 and 8");
+      continue;
+    }
+    if (!(fields[fld][square] === " ")) {
+      console.log("This square is already taken , pick again");
+      continue;
+    }
+    break;
   }
+  console.log(fields[fld][square])
+  fields[fld][square] = playerMarker;
 }
-
-function validateInput(field, square, player){
-  if (fields[field][square] === ' '){
-    fields[field][square] === playerMarker
-  }
-}
-
-console.log(playerInput(move = false))
 
 function resetFields() {
   fields.forEach((element) => {
@@ -61,6 +84,11 @@ function resetFields() {
       element[i] = " ";
     }
   });
+}
+function fillField(field, marker) {
+  for (i = 0; i < 9; i++) {
+    fields[field][i] = marker;
+  }
 }
 
 function printBoard(fields) {
@@ -103,5 +131,9 @@ function printBoard(fields) {
   );
 }
 
+console.clear()
 resetFields();
+fillField(2, playerOneMarker);
 printBoard(fields);
+playerInput(fieldPick = true, field = 1, playerMarker = playerOneMarker);
+printBoard(fields)
