@@ -35,14 +35,14 @@ function playerInput(fieldPick = true, field, playerMarker) {
     while (true) {
       fld = readline.question("Pick field 0-8-> ");
 
-      if (!(/^\d$/.test(fld))){
+      if (!(/^\d$/.test(fld))) {
         console.log("Enter number between 0 and 8");
         continue;
-      }else{
+      } else {
         fld = Number(fld);
       }
 
-      if ( fld < 0 || fld > 8) {
+      if (fld < 0 || fld > 8) {
         console.log("Number out of range - Enter number between 0 and 8");
         continue;
       }
@@ -57,10 +57,10 @@ function playerInput(fieldPick = true, field, playerMarker) {
 
   while (true) {
     square = readline.question("Pick square 0-8-> ");
-    if (!(/^\d$/.test(square))){
+    if (!(/^\d$/.test(square))) {
       console.log("Enter number between 0 and 8");
       continue;
-    }else{
+    } else {
       square = Number(square)
     }
 
@@ -129,6 +129,46 @@ function printBoard(fields) {
   console.log(
     `  ${fields[6][6]}|${fields[6][7]}|${fields[6][8]}    |    ${fields[7][6]}|${fields[7][7]}|${fields[7][8]}    |    ${fields[8][6]}|${fields[8][7]}|${fields[8][8]}`
   );
+}
+function checkForWin(fields, marker) {
+  /*
+  winning combos
+  012
+  345
+  678
+  036
+  147
+  258
+  048
+  246
+  */
+  // square win
+  for (i = 0; i < 9; i++) {
+    if (fields[i].every(el => el === marker)) {
+      continue
+    }
+    if (fields[i][0] === marker && fields[i][1] === marker && fields[i][2] === marker ||
+      fields[i][3] === marker && fields[i][4] === marker && fields[i][5] === marker ||
+      fields[i][6] === marker && fields[i][7] === marker && fields[i][8] === marker ||
+      fields[i][0] === marker && fields[i][3] === marker && fields[i][6] === marker ||
+      fields[i][1] === marker && fields[i][4] === marker && fields[i][7] === marker ||
+      fields[i][2] === marker && fields[i][5] === marker && fields[i][8] === marker ||
+      fields[i][0] === marker && fields[i][4] === marker && fields[i][8] === marker ||
+      fields[i][2] === marker && fields[i][4] === marker && fields[i][6] === marker) {
+      fillField(i, marker)
+    }
+    if (fields[0].every(el => el === marker) && fields[1].every(el => el === marker) && fields[2].every(el => el === marker) ||
+      fields[3].every(el => el === marker) && fields[4].every(el => el === marker) && fields[5].every(el => el === marker) ||
+      fields[6].every(el => el === marker) && fields[7].every(el => el === marker) && fields[8].every(el => el === marker) ||
+      fields[0].every(el => el === marker) && fields[3].every(el => el === marker) && fields[6].every(el => el === marker) ||
+      fields[1].every(el => el === marker) && fields[4].every(el => el === marker) && fields[7].every(el => el === marker) ||
+      fields[2].every(el => el === marker) && fields[5].every(el => el === marker) && fields[8].every(el => el === marker) ||
+      fields[0].every(el => el === marker) && fields[4].every(el => el === marker) && fields[8].every(el => el === marker) ||
+      fields[2].every(el => el === marker) && fields[4].every(el => el === marker) && fields[6].every(el => el === marker)) {
+      console.log(`Player ${marker} won !`)
+    }
+
+  }
 }
 
 console.clear()
