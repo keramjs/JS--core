@@ -16,7 +16,7 @@ const readline = require("readline-sync");
 const playerOneMarker = "X";
 const playerTworMArker = "O";
 
-let fields = [[], [], [], [], [], [], [], [], []];
+let fields = [[1], [2], [3], [4], [], [], [], [], []];
 
 function welcomeMessage() {
   console.log("Welcome to ultimate tic tac toe");
@@ -142,11 +142,12 @@ function checkForWin(fields, marker) {
   048
   246
   */
-  // square win
+
   for (i = 0; i < 9; i++) {
-    if (fields[i].every(el => el === marker)) {
-      continue
+    if (fields[i].every(el => el === marker || el === '-')) {
+      continue // field already taken or draw continue with next field
     }
+
     if (fields[i][0] === marker && fields[i][1] === marker && fields[i][2] === marker ||
       fields[i][3] === marker && fields[i][4] === marker && fields[i][5] === marker ||
       fields[i][6] === marker && fields[i][7] === marker && fields[i][8] === marker ||
@@ -155,7 +156,9 @@ function checkForWin(fields, marker) {
       fields[i][2] === marker && fields[i][5] === marker && fields[i][8] === marker ||
       fields[i][0] === marker && fields[i][4] === marker && fields[i][8] === marker ||
       fields[i][2] === marker && fields[i][4] === marker && fields[i][6] === marker) {
-      fillField(i, marker)
+      fillField(i, marker) // field is won by player 
+    } else if (!(fields[i].some(el => el === " "))) {
+      fillField(i, "-") //  field draw
     }
     if (fields[0].every(el => el === marker) && fields[1].every(el => el === marker) && fields[2].every(el => el === marker) ||
       fields[3].every(el => el === marker) && fields[4].every(el => el === marker) && fields[5].every(el => el === marker) ||
@@ -166,14 +169,19 @@ function checkForWin(fields, marker) {
       fields[0].every(el => el === marker) && fields[4].every(el => el === marker) && fields[8].every(el => el === marker) ||
       fields[2].every(el => el === marker) && fields[4].every(el => el === marker) && fields[6].every(el => el === marker)) {
       console.log(`Player ${marker} won !`)
+      break
+    } else if (!(fields.filter(field => field.some(el => el === ' ')))) {
+      console.log("Game draw")
+      break
     }
 
   }
 }
 
-console.clear()
+console.clear();
 resetFields();
-fillField(2, playerOneMarker);
+fields.forEach(el => console.log(el))
+//checkForWin(fields, playerOneMarker)
 printBoard(fields);
-playerInput(fieldPick = true, field = 1, playerMarker = playerOneMarker);
-printBoard(fields)
+// playerInput(fieldPick = true, field = 1, playerMarker = playerOneMarker);
+// printBoard(fields)
