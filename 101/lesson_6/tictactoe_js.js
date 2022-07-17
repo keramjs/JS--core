@@ -27,7 +27,7 @@ function welcomeMessage() {
   );
 }
 
-function playerInput(field, fieldPick) {
+function playerInput(field, fieldPick) { // TODO :- validowac czy ostatni player input skierowal na zajety field  jezeli jest zajety to gracz moze wybrac dowolny niezajety field
   let fld = field;
   let square;
 
