@@ -56,6 +56,7 @@ function playerInput(field) {
   }
 
   while (true) {
+    console.log(`Your are placing your mark on field number ${fld}`)
     square = readline.question("Pick square 0-8-> ");
     if (!(/^\d$/.test(square))) {
       console.log("Enter number between 0 and 8");
@@ -170,15 +171,18 @@ printBoard(fields);
 let playerPick = [0, 0];
 
 while (true) {
+  console.log("player 1 - X move")
   playerPick = playerInput(playerPick[1]);
-  fields[playerPick[0]][playerPick[1]] = playerOneMarker
-  if (checkForWin(fields, playerOneMarker)) break;
+  fields[playerPick[0]][playerPick[1]] = playerOneMarker;
   console.clear();
   printBoard(fields);
-
+  if (checkForWin(fields, playerOneMarker)) break;
+  
+  console.log("player 2 - O move")
   playerPick = playerInput(playerPick[1]);
-  fields[playerPick[0]][playerPick[1]] = playerTwoMarker
+  fields[playerPick[0]][playerPick[1]] = playerTwoMarker;
+  console.clear();
+  printBoard(fields);
   if (checkForWin(fields, playerTwoMarker)) break;
-  console.clear()
-  printBoard(fields)
+  
 }
