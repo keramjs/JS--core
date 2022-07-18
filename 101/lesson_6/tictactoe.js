@@ -15,6 +15,7 @@
 const readline = require("readline-sync");
 const playerOneMarker = "X";
 const playerTwoMarker = "O";
+const drawMarker = "-";
 
 let fields = [[], [], [], [], [], [], [], [], []];
 
@@ -26,12 +27,12 @@ function welcomeMessage() {
     "If Field is won or full you can pick different field to put your mark."
   );
 }
-
-function playerInput(field, fieldPick) { // TODO :- validowac czy ostatni player input skierowal na zajety field  jezeli jest zajety to gracz moze wybrac dowolny niezajety field
+function playerInput(field) { 
   let fld = field;
   let square;
 
-  if (fieldPick) {
+  if (fields.every(element => element.every(subelement => subelement === " ")) || fields[fld].every(el=> el === playerOneMarker) || fields[fld].every(el=> el === playerTwoMarker) || fields[fld].every(el=> el === drawMarker)) {
+    //kiedy wszytkie pola sa wolne (poczatek gry), field zajety przez "X","O" lub "-" 
     while (true) {
       fld = readline.question("Pick field 0-8-> ");
       if (!(/^\d$/.test(fld))) {
@@ -76,7 +77,6 @@ function playerInput(field, fieldPick) { // TODO :- validowac czy ostatni player
   return [fld, square];
 
 }
-
 function resetFields() {
   fields.forEach((element) => {
     for (i = 0; i < 9; i++) {
@@ -131,7 +131,7 @@ function printBoard(fields) {
 function checkForWin(fields, marker) {
 
   for (i = 0; i < 9; i++) {
-    if (fields[i].every(el => el === playerOneMarker) || fields[i].every(el => el === playerTwoMarker) || fields[i].some(el => el === "-")) {
+    if (fields[i].every(el => el === playerOneMarker) || fields[i].every(el => el === playerTwoMarker) || fields[i].some(el => el === drawMarker) ){
       continue // field already taken or draw continue with next field
     }
 
@@ -144,7 +144,7 @@ function checkForWin(fields, marker) {
       fields[i][0] === marker && fields[i][4] === marker && fields[i][8] === marker ||
       fields[i][2] === marker && fields[i][4] === marker && fields[i][6] === marker))) {
       fillField(i, marker) // field is won by player 
-    } else if (!(fields[i].some(el => el === " "))) fillField(i, "-"); // nie ma wolnego pola
+    } else if (!(fields[i].some(el => el === " "))) fillField(i, drawMarker); // nie ma wolnego pola
   }
   if (fields[0].every(el => el === marker) && fields[1].every(el => el === marker) && fields[2].every(el => el === marker) ||
     fields[3].every(el => el === marker) && fields[4].every(el => el === marker) && fields[5].every(el => el === marker) ||
@@ -168,10 +168,9 @@ welcomeMessage();
 resetFields();
 printBoard(fields);
 let playerPick = [0, 0];
-let fieldPick = true
 
 while (true) {
-  playerPick = playerInput(playerPick[1],);
+  playerPick = playerInput(playerPick[1]);
   fields[playerPick[0]][playerPick[1]] = playerOneMarker
   if (checkForWin(fields, playerOneMarker)) break;
   console.clear();
