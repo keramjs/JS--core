@@ -196,24 +196,85 @@ function checkForWin(fields, marker) {
   }
 }
 
-console.clear();
-welcomeMessage();
-resetFields();
-printBoard(fields);
-let playerPick = [0, 0];
+// console.clear();
+// welcomeMessage();
+// resetFields();
+// printBoard(fields);
+// let playerPick = [0, 0];
 
-while (true) {
-  console.log("player 1 - X move");
-  playerPick = playerInput(playerPick[1]);
-  fields[playerPick[0]][playerPick[1]] = playerOneMarker;
-  console.clear();
-  printBoard(fields);
-  if (checkForWin(fields, playerOneMarker)) break;
+// while (true) {
+//   console.log("player 1 - X move");
+//   playerPick = playerInput(playerPick[1]);
+//   fields[playerPick[0]][playerPick[1]] = playerOneMarker;
+//   console.clear();
+//   printBoard(fields);
+//   if (checkForWin(fields, playerOneMarker)) break;
 
-  console.log("player 2 - O move");
-  playerPick = playerInput(playerPick[1]);
-  fields[playerPick[0]][playerPick[1]] = playerTwoMarker;
-  console.clear();
-  printBoard(fields);
-  if (checkForWin(fields, playerTwoMarker)) break;
+//   console.log("player 2 - O move");
+//   playerPick = playerInput(playerPick[1]);
+//   fields[playerPick[0]][playerPick[1]] = playerTwoMarker;
+//   console.clear();
+//   printBoard(fields);
+//   if (checkForWin(fields, playerTwoMarker)) break;
+// }
+
+function win(board, player){
+
+  return 
 }
+
+function oppositePlayer(currentPlayer){
+  if (currentPlayer === 'X'){
+    return "O";
+  }else{
+    return "X";
+  }
+
+}
+function checkMoveVal(board, currentMove, currentPlayer){
+  lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+  
+  moveLines = lines.filter(elements => elements.some(element => element === currentMove))
+  
+  moveValue = 0;
+
+  moveLines.forEach(line =>{
+    let lineValue = 0;
+
+    for (let i of line){
+      if (board[i] === currentPlayer){
+        lineValue += 2;
+      }else if(board[i]=== oppositePlayer(currentPlayer)){
+        lineValue -=2;
+      }else{
+        lineValue += 1; // + moveLines.length +1 za kazda pusta linje
+      }
+    }
+    
+    if (lineValue > moveValue) moveValue = lineValue
+  })
+
+  return moveValue
+}
+
+let board = [" "," "," ",
+            " ", " "," ",
+            " "," "," "];
+
+function evaluateBoardForPlayer(board, currentPlayer) {
+  let bestMove = 0;
+  let idxOfBestMove;
+  for (let i = 0; i < 9; i++) {
+    if (board[i] === " ") {
+      let bm = checkMoveVal(board, i, currentPlayer);
+      console.log(bm)
+      if (bm > bestMove) {
+        bestMove = bm;
+        idxOfBestMove = i;
+      }
+    }
+  }
+  return idxOfBestMove;
+}
+
+console.log(`your best move is ${evaluateBoardForPlayer(board,"X")}`)
