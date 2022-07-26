@@ -1,3 +1,9 @@
+let board = [];
+let currentPlayer = "O";
+const readline = require("readline-sync");
+let score = 0;
+
+
 function oppositePlayer(currentPlayer){
     if (currentPlayer === 'X'){
       return "O";
@@ -31,10 +37,77 @@ function checkMoveVal(board, currentMove, currentPlayer){
   
     return moveValue
   }  
+function evaluateWin(board, currentPlayer){
+  winLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+    
+  if (lines.filter(elements => elements.every(element => element === currentPlayer))){
+    return 1;
+  }else if (lines.filter(elements => elements.every(element => element === oppositePlayer(currentPlayer))){
+    return -1;
+  }else if(!(board.some(element => element === " "))){
+    return 0;
+  }else{
+    return 2;
+  }
 
-  let board = [];
-  let currentPlayer = "X";
-  
+}
+function minMax(board, depth, maxPlayer){
+
+  if (depth === 0 || (evaluateWin(board, currentPlayer) !== 1 )  || (evaluateWin(board, currentPlayer) !== -1)  || (evaluateWin(board, currentPlayer) !==0)){
+    return  evaluateWin(board, currentPlayer);
+  }
+
+  if (maxPlayer){
+    let maxEval = -Infinity;
+    board.forEach(child => {
+      if (child == " "){
+        child = "X"
+        let evaluation = minMax(child, depth - 1, false);
+        child = "O"
+        maxEval = max( maxEval , evaluation)
+      }
+    })
+
+    return maxEval
+
+  }else{
+    let minEval = Infinity;
+    board.forEach(child => {
+      if (child == " "){
+        child = "O"
+        let evaluation = minMax(child, depth - 1, true)
+        child = " "
+        maxEval = min( minEval , evaluation)
+      }
+    })
+    return minEval
+  }
+
+
+}
+function bestMove(){
+  let bestScore = -Infinity;
+  let move;
+  for(let i of board){
+  if (i == " "){
+    i = currentPlayer; 
+    let score = minMax(board, 9, false ); // checking hypotetical move value
+    i = " " // undoing board change
+    if (score > bestScore){
+      bestScore = score;
+      move = i;
+    }
+  }
+}
+return move
+}
+function printBoard(board){
+  console.log(` ${board[0]} | ${board[1]} | ${board[2]} `);
+  console.log(" - | - | - ");
+  console.log(` ${board[3]} | ${board[4]} | ${board[5]} `);
+  console.log(" - | - | - ");
+  console.log(` ${board[6]} | ${board[7]} | ${board[8]} `);
+}
 function evaluateBoardForPlayer(board, currentPlayer) {
     let bestMove = 0;
     let idxOfBestMove;
@@ -75,8 +148,22 @@ function playerInput(board) {
     }
     return  square;
 }
-function resetFields() {
+function resetBoard() {
   for (i = 0; i < 9; i++) {
     board[i] = " ";
   }
+}
+resetBoard();
+while (true){
+currentPlayer = oppositePlayer(currentPlayer)
+board[playerInput(board)] = currentPlayer
+printBoard(board);
+if(evaluateWin(board) !== 2) break;
+
+currentPlayer = oppositePlayer(currentPlayer) // ai turn
+let aiMove = bestMove();
+board[aiMove] = currentPlayer;
+printBoard(board);
+if(evaluateWin(board) !== 2) break;
+
 }
