@@ -1,169 +1,196 @@
+
 let board = [];
 let currentPlayer = "O";
 const readline = require("readline-sync");
-let score = 0;
 
-
-function oppositePlayer(currentPlayer){
-    if (currentPlayer === 'X'){
-      return "O";
-    }else{
-      return "X";
+function countAvalibleMoves(board) {
+  return board.reduce((acc, element) => {
+    if (element === " ") {
+      acc += 1;
+      return acc;
+    } else {
+      return acc;
     }
-  
+  }, 0);
+}
+function oppositePlayer(currentPlayer) {
+  if (currentPlayer === "X") {
+    return "O";
+  } else {
+    return "X";
   }
-function checkMoveVal(board, currentMove, currentPlayer){
-    lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
-    
-    moveLines = lines.filter(elements => elements.some(element => element === currentMove))
-    
-    moveValue = 0;
-  
-    moveLines.forEach(line =>{
-      let lineValue = 0;
-  
-      for (let i of line){
-        if (board[i] === currentPlayer){
-          lineValue += 2;
-        }else if(board[i]=== oppositePlayer(currentPlayer)){
-          lineValue -=2;
-        }else{
-          lineValue += 1; // + moveLines.length +1 za kazda pusta linje
-        }
-      }
-      
-      if (lineValue > moveValue) moveValue = lineValue
-    })
-  
-    return moveValue
-  }  
-function evaluateWin(board, currentPlayer){
-  winLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
-    
-  if (lines.filter(elements => elements.every(element => element === currentPlayer))){
+}
+function evaluateWin(board) {
+  winLines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  if (
+    winLines.some((element) => element.every((sign) => board[sign] === "X"))
+  ) {
     return 1;
-  }else if (lines.filter(elements => elements.every(element => element === oppositePlayer(currentPlayer))){
+  } else if (
+    winLines.some((element) => element.every((sign) => board[sign] === "O"))
+  ) {
     return -1;
-  }else if(!(board.some(element => element === " "))){
+  } else {
     return 0;
-  }else{
-    return 2;
   }
-
 }
-function minMax(board, depth, maxPlayer){
+function checkWin(board) {
+  winLines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
 
-  if (depth === 0 || (evaluateWin(board, currentPlayer) !== 1 )  || (evaluateWin(board, currentPlayer) !== -1)  || (evaluateWin(board, currentPlayer) !==0)){
-    return  evaluateWin(board, currentPlayer);
+  if (
+    winLines.some((element) => element.every((sign) => board[sign] === "X"))
+  ) {
+    return true;
+  } else if (
+    winLines.some((element) => element.every((sign) => board[sign] === "O"))
+  ) {
+    return true;
+  } else if (!board.includes(" ")) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function minMax(board, depth, maxPlayer) {
+  if (depth === 0 || checkWin(board)) {
+    return evaluateWin(board);
   }
 
-  if (maxPlayer){
+  if (maxPlayer) {
     let maxEval = -Infinity;
-    board.forEach(child => {
-      if (child == " "){
-        child = "X"
-        let evaluation = minMax(child, depth - 1, false);
-        child = "O"
-        maxEval = max( maxEval , evaluation)
+    for (let position = 0; position < board.length; position++) {
+      if (board[position] === " ") {
+        board[position] = "X";
+        let evaluation = minMax(board, depth - 1, false);
+        board[position] = " ";
+        maxEval = Math.max(maxEval, evaluation);
+        // alpha = Math.max(alpha, evaluation);
+        // if (betha <= alpha) {
+        //   break;
+        // }
       }
-    })
-
-    return maxEval
-
-  }else{
+    }
+    return maxEval;
+  } else {
     let minEval = Infinity;
-    board.forEach(child => {
-      if (child == " "){
-        child = "O"
-        let evaluation = minMax(child, depth - 1, true)
-        child = " "
-        maxEval = min( minEval , evaluation)
+    for (let position = 0; position < board.length; position++) {
+      if (board[position] === " ") {
+        board[position] = "O";
+        let evaluation = minMax(board, depth - 1, true);
+        board[position] = " ";
+        minEval = Math.min(minEval, evaluation);
+        // betha = Math.min(betha, evaluation);
+        // if (betha <= alpha) {
+        //   break;
+        // }
       }
-    })
-    return minEval
+    }
+    return minEval;
   }
-
-
 }
-function bestMove(){
-  let bestScore = -Infinity;
-  let move;
-  for(let i of board){
-  if (i == " "){
-    i = currentPlayer; 
-    let score = minMax(board, 9, false ); // checking hypotetical move value
-    i = " " // undoing board change
-    if (score > bestScore){
-      bestScore = score;
-      move = i;
+function pickBestMove(board, currentPlayer) {
+  let bestMove = 0;
+  let bestScore = 100;
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === " ") {
+      board[i] = currentPlayer;
+      score = minMax(board, 20, true);
+      board[i] = " ";
+      if (score < bestScore) {
+        bestScore = score;
+        bestMove = i;
+      }
     }
   }
+
+  return bestMove;
 }
-return move
-}
-function printBoard(board){
+function printBoard(board) {
   console.log(` ${board[0]} | ${board[1]} | ${board[2]} `);
   console.log(" - | - | - ");
   console.log(` ${board[3]} | ${board[4]} | ${board[5]} `);
   console.log(" - | - | - ");
   console.log(` ${board[6]} | ${board[7]} | ${board[8]} `);
 }
-function evaluateBoardForPlayer(board, currentPlayer) {
-    let bestMove = 0;
-    let idxOfBestMove;
-    for (let i = 0; i < 9; i++) {
-      if (board[i] === " ") {
-        let bm = checkMoveVal(board, i, currentPlayer);
-        console.log(bm)
-        if (bm > bestMove) {
-          bestMove = bm;
-          idxOfBestMove = i;
-        }
-      }
-    }
-    return idxOfBestMove;
-  }
 function playerInput(board) {
-    let square;
-  
-    while (true) {
-      console.log(`Your are placing your mark `);
-      square = readline.question("Pick square 0-8-> ");
-      if (!/^\d$/.test(square)) {
-        console.log("Enter number between 0 and 8");
-        continue;
-      } else {
-        square = Number(square);
-      }
-  
-      if (square < 0 && square > 8) {
-        console.log("Number out of range - Enter number between 0 and 8");
-        continue;
-      }
-      if (!(board[square] === " ")) {
-        console.log("This square is already taken , pick again");
-        continue;
-      }
-      break;
+  let square;
+
+  while (true) {
+    console.log(`Your are placing your mark `);
+    square = readline.question("Pick square 0-8-> ");
+    if (!/^\d$/.test(square)) {
+      console.log("Enter number between 0 and 8");
+      continue;
+    } else {
+      square = Number(square);
     }
-    return  square;
+
+    if (square < 0 && square > 8) {
+      console.log("Number out of range - Enter number between 0 and 8");
+      continue;
+    }
+    if (!(board[square] === " ")) {
+      console.log("This square is already taken , pick again");
+      continue;
+    }
+    break;
+  }
+  return square;
 }
 function resetBoard() {
   for (i = 0; i < 9; i++) {
     board[i] = " ";
   }
 }
+function whoWon() {
+  let win = evaluateWin(board);
+  if (win === 1) {
+    console.log("X won");
+  } else if (win === -1) {
+    console.log("O won");
+  } else {
+    console.log("draw");
+  }
+}
+
 resetBoard();
-while (true){
-currentPlayer = oppositePlayer(currentPlayer)
-board[playerInput(board)] = currentPlayer
 printBoard(board);
-if(evaluateWin(board) !== 2) break;
-
-currentPlayer = oppositePlayer(currentPlayer) // ai turn
-let aiMove = bestMove();
-board[aiMove] = currentPlayer;
-printBoard(board);
-if(evaluateWin(board) !== 2) break;
-
+while (true) {
+  currentPlayer = oppositePlayer(currentPlayer);
+  console.log(`${currentPlayer} move`);
+  board[playerInput(board)] = currentPlayer;
+  printBoard(board);
+  if (checkWin(board)) {
+    whoWon();
+    break;
+  }
+  currentPlayer = oppositePlayer(currentPlayer);
+  console.log(`${currentPlayer} move`);
+  console.log(pickBestMove(board, currentPlayer))
+  board[pickBestMove(board, currentPlayer)] = currentPlayer;
+  printBoard(board);
+  if (checkWin(board)) {
+    whoWon();
+    break;
+  }
 }
