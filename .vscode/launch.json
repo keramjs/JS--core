@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Launch Program",
-            "program": "${workspaceFolder}/101/lesson_6/tictactoe_simple.js",
+            "program": "${workspaceFolder}/101/lesson_6/twentyOne.js",
             "request": "launch",
             "skipFiles": [
                 "<node_internals>/**"
