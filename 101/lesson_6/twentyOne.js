@@ -102,8 +102,6 @@ function handValue(player){
     return playerValue
 }
 
-function dealCard(){}
-
 let deck = createDeck();
 let deckKeys = randomizeDeck(deck);
 let player ={};
