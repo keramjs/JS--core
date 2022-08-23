@@ -1,7 +1,6 @@
 
 function crunch(txt) {
-  let arr = txt.split('');
-  let newTxt = arr.reduce((tekst, letter) => {
+  let newTxt = txt.split('').reduce((tekst, letter) => {
     if (tekst.charAt(tekst.length - 1) === letter) {
       return tekst;
     } else {
