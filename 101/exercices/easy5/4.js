@@ -1,7 +1,8 @@
 function findDup(arr) {
   for (let i = 0; i < arr.length; i += 1) {
     let element = arr[i];
-    let chckArr = [].concat(arr).splice(i, 1);
+    let chckArr = arr.slice();
+    chckArr.splice(i, 1);
     if (chckArr.includes(element)) {
       return element;
     };
