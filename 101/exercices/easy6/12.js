@@ -1,6 +1,15 @@
+
 /* Write a function that takes an Array as an argument and reverses its elements in place. That is, mutate the Array passed into this method. The return value should be the same Array object. 
 You may not use Array.prototype.reverse().
 */
+function reverse(arr) {
+  let len = arr.length;
+  for (let i = 0; i < len; i += 1) {
+    let tempEl = arr.pop();
+    arr.shift(tempEl);
+  }
+  return arr;
+}
 
 let list = [1, 2, 3, 4];
 let result = reverse(list);
