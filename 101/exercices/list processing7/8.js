@@ -2,5 +2,15 @@
 
 In the example below, we want to buy 3 apples, 1 orange, and 2 bananas. Thus, we return an array that contains 3 apples, 1 orange, and 2 bananas. */
 
-buyFruit([['apple', 3], ['orange', 1], ['banana', 2]]);
+function buyFruit(arr) {
+  resoult = [];
+  arr.forEach(element => {
+    for (let i = 0; i < element[1]; i += 1) {
+      resoult.push(element[0]);
+    }
+  }
+  );
+  return resoult;
+}
+console.log(buyFruit([['apple', 3], ['orange', 1], ['banana', 2]]));
 // returns ["apple", "apple", "apple", "orange", "banana", "banana"]
