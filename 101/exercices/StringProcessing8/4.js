@@ -2,6 +2,12 @@
 
 You may assume that a word is any sequence of non-whitespace characters. */
 
-wordCap('four score and seven');       // "Four Score And Seven"
-wordCap('the javaScript language');    // "The Javascript Language"
-wordCap('this is a "quoted" word');    // 'This Is A "quoted" Word'
+function wordCap(txt) {
+  return txt.split(' ').map(element => (element[0].toUpperCase()[0]) + element.slice(1).toLowerCase()).join(" ")
+}
+
+
+
+console.log(wordCap('four score and seven'));       // "Four Score And Seven"
+console.log(wordCap('the javaScript language'));    // "The Javascript Language"
+console.log(wordCap('this is a "quoted" word'));    // 'This Is A "quoted" Word'
