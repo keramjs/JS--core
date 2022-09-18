@@ -2,31 +2,29 @@
 
 function staggeredCase(txt) {
   let arr = txt.split('');
-  console.log(arr);
-  return arr.map((el, idx) => {
-    let changeIdx;
-    changeIdx = /A-Za-Z/.test(el)  idx: changeIdx - 1;
-    console.log(changeIdx);
-
-    if (changeIdx % 2 !== 0) {
-      if (/[A-Z]/.test(el)) {
-        return el.toLowerCase();
-      } else {
-        return el;
+  let toggle = 0;
+  for (let i = 0; i < arr.length; i += 1) {
+    if (/[A-Za-z]/.test(arr[i])) {
+      toggle += 1;
+    } else {
+      continue;
+    }
+    if (!(toggle % 2)) {
+      if (/[A-Z]/.test(arr[i])) {
+        arr[i] = arr[i].toLowerCase();
       }
     } else {
-      if (/[a-z]/.test(el)) {
-        return el.toUpperCase();
-      } else {
-        return el;
+      if (/[a-z]/.test(arr[i])) {
+        arr[i] = arr[i].toUpperCase();
       }
     }
-  }).join('')
+  }
+  return arr.join('')
+
 }
 
-// console.log(staggeredCase("ALL CAPS"));
+console.log(staggeredCase("I Love Launch School!") === "I lOvE lAuNcH sChOoL!");
+console.log(staggeredCase("ALL CAPS") === "AlL cApS");
 console.log(
   staggeredCase("ignore 77 the 444 numbers") === "IgNoRe 77 ThE 444 nUmBeRs"
 );
-console.log(
-  staggeredCase("ignore 77 the 444 numbers"))
