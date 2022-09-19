@@ -2,9 +2,31 @@
 
 Write a function that takes an integer as an argument and returns the maximum rotation of that integer. You can (and probably should) use the rotateRightmostDigits function from the previous exercise. */
 
-maxRotation(735291);          // 321579
-maxRotation(3);               // 3
-maxRotation(35);              // 53
-maxRotation(105);             // 15 -- the leading zero gets dropped
-maxRotation(8703529146);      // 7321609845
 
+function maxRotation(num){
+    let len = String(num).length;
+    let rotated = num;
+    while(len > 1){
+        rotated = rotateRightmostDigits(rotated, len);
+        len -=1;
+    }
+    return rotated
+}
+
+function rotateRightmostDigits(num, digNum){
+    if (digNum === 1 ) return num;
+    let str = String(num)
+    let leftSide = str.slice(0,str.length - digNum);
+    let rotStr = str.slice(-digNum)
+    return Number(leftSide + rotateLeft(rotStr))
+}
+
+function rotateLeft(str){
+    return  str.slice(1) + str.slice(0,1); 
+}
+
+console.log(maxRotation(735291));          // 321579
+console.log(maxRotation(3));               // 3
+console.log(maxRotation(35));              // 53
+console.log(maxRotation(105));             // 15 -- the leading zero gets dropped
+console.log(maxRotation(8703529146));      // 7321609845

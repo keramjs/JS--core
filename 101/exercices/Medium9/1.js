@@ -14,6 +14,9 @@ function rotateArray(arr) {
         let first = arrCpy.shift();
         arrCpy.push(first);
         return arrCpy;
+        //
+        //or
+        // return arr.slice(1).concat(arr[0])
     } else {
         return undefined;
     }
