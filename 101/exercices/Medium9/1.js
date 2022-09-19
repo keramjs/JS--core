@@ -5,19 +5,34 @@
 
 Review the test cases below, then implement the solution accordingly. */
 
-rotateArray([7, 3, 5, 2, 9, 1]);       // [3, 5, 2, 9, 1, 7]
-rotateArray(['a', 'b', 'c']);          // ["b", "c", "a"]
-rotateArray(['a']);                    // ["a"]
-rotateArray([1, 'a', 3, 'c']);         // ["a", 3, "c", 1]
-rotateArray([{ a: 2 }, [1, 2], 3]);    // [[1, 2], 3, { a: 2 }]
-rotateArray([]);                       // []
+const { timeStamp } = require("console");
+
+function rotateArray(arr) {
+    if (Array.isArray(arr)) {
+        if (arr.length === 0) return [];
+        let arrCpy = arr.slice();
+        let first = arrCpy.shift();
+        arrCpy.push(first);
+        return arrCpy;
+    } else {
+        return undefined;
+    }
+
+}
+
+console.log(rotateArray([7, 3, 5, 2, 9, 1]));       // [3, 5, 2, 9, 1, 7]
+console.log(rotateArray(['a', 'b', 'c']));          // ["b", "c", "a"]
+console.log(rotateArray(['a']));                    // ["a"]
+console.log(rotateArray([1, 'a', 3, 'c']));         // ["a", 3, "c", 1]
+console.log(rotateArray([{ a: 2 }, [1, 2], 3]));    // [[1, 2], 3, { a: 2 }]
+console.log(rotateArray([]));                       // []
 
 // return `undefined` if the argument is not an array
-rotateArray();                         // undefined
-rotateArray(1);                        // undefined
+console.log(rotateArray());                         // undefined
+console.log(rotateArray(1));                        // undefined
 
 
 // the input array is not mutated
 let array = [1, 2, 3, 4];
-rotateArray(array);                    // [2, 3, 4, 1]
+console.log(rotateArray(array));                    // [2, 3, 4, 1]
 array;                                 // [1, 2, 3, 4]
