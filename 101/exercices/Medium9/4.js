@@ -22,34 +22,87 @@ Programs will be supplied to your language function via a string argument. Your 
 
 Initialize the stack and register to the values [] and 0, respectively. */
 
-minilang('PRINT');
+
+
+let stack = [];
+let reg = 0;
+let instructions = {
+    setReg: function (val) {
+      reg = val;
+    },
+    PRINT: function () {
+      console.log(reg);
+    },
+  
+    PUSH: function () {
+      stack.push(reg);
+    },
+  
+    ADD: function () {
+      reg += stack.pop();
+    },
+  
+    SUB: function () {
+      reg -= stack.pop();
+    },
+  
+    MULT: function () {
+      reg = reg * stack.pop();
+    },
+  
+    DIV: function () {
+      reg = Math.floor(reg / stack.pop()).toFixed(2);
+    },
+  
+    REMAINDER: function () {
+      reg %= stack.pop();
+    },
+  
+    POP: function () {
+      reg = stack.pop();
+    },
+  };
+
+function minilang(command) {
+  let commands = command.split(" ");
+  for (let i of commands) {
+    if (Number(i)) {
+        // console.log(`set reg to  ${Number(i)} `)
+      instructions.setReg(Number(i));
+    }else{
+        instructions[i]();
+    }
+  }
+}
+
+minilang("PRINT");
 // 0
 
-minilang('5 PUSH 3 MULT PRINT');
+minilang("5 PUSH 3 MULT PRINT");
 // 15
 
-minilang('5 PRINT PUSH 3 PRINT ADD PRINT');
+minilang("5 PRINT PUSH 3 PRINT ADD PRINT");
 // 5
 // 3
 // 8
 
-minilang('5 PUSH POP PRINT');
+minilang("5 PUSH POP PRINT");
 // 5
 
-minilang('3 PUSH 4 PUSH 5 PUSH PRINT ADD PRINT POP PRINT ADD PRINT');
+minilang("3 PUSH 4 PUSH 5 PUSH PRINT ADD PRINT POP PRINT ADD PRINT");
 // 5
 // 10
 // 4
 // 7
 
-minilang('3 PUSH PUSH 7 DIV MULT PRINT');
+minilang("3 PUSH PUSH 7 DIV MULT PRINT");
 // 6
 
-minilang('4 PUSH PUSH 7 REMAINDER MULT PRINT');
+minilang("4 PUSH PUSH 7 REMAINDER MULT PRINT");
 // 12
 
-minilang('-3 PUSH 5 SUB PRINT');
+minilang("-3 PUSH 5 SUB PRINT");
 // 8
 
-minilang('6 PUSH');
+minilang("6 PUSH");
 // (nothing is printed because the `program` argument has no `PRINT` commands)
