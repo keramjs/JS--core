@@ -4,7 +4,13 @@ Memoization is an approach that involves saving a computed answer for future reu
 
 For this exercise, your objective is to refactor the recursive fibonacci function to use memoization. */
 
-function fibonacci(num, previous){
-    if (num === 1 || num === 2) return 1;
-    return fibonacci(num -1, previous);
-  }
+function fibonacci(num, mem){
+    mem = mem || {};
+    if (mem[num]) return mem[num];
+    if (num <=2 ) return 1;
+    return mem[num] = fibonacci(num-1, mem)+ fibonacci(num-2, mem);
+}
+
+console.log(fibonacci(20));       // 6765
+console.log(fibonacci(50));       // 12586269025
+console.log(fibonacci(75));       // 2111485077978050
