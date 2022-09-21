@@ -8,8 +8,17 @@ To be a valid triangle, the sum of the lengths of the two shortest sides must be
 
 Write a function that takes the lengths of the three sides of a triangle as arguments and returns one of the following four strings representing the triangle's classification: 'equilateral', 'isosceles', 'scalene', or 'invalid'. */
 
-triangle(3, 3, 3);        // "equilateral"
-triangle(3, 3, 1.5);      // "isosceles"
-triangle(3, 4, 5);        // "scalene"
-triangle(0, 3, 3);        // "invalid"
-triangle(3, 1, 1);        // "invalid"
+function triangle(len1, len2, len3) {
+    let arr = [len1, len2, len2].sort((a, b) => a - b);
+    if (arr.includes(0)) return "invalid"
+    if (arr[0] + arr[1] < arr[2]) return "invalid";
+    if (len1 === len2 && len1 === len3) return "Equilateral";
+    if (len1 !== len2 && len1 !== len3 && len2 !== len3) return "Scalene";
+    if ((len1 === len2 && len3 !== len1) || (len1 === len3 && len2 !== len1) || (len2 === len3 && len1 !== len2)) return "Isoceles";
+}
+
+console.log(triangle(3, 3, 3));        // "equilateral"
+console.log(triangle(3, 3, 1.5));      // "isosceles"
+console.log(triangle(3, 4, 5));        // "scalene"
+console.log(triangle(0, 3, 3));        // "invalid"
+console.log(triangle(3, 1, 1));        // "invalid"
