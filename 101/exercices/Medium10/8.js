@@ -4,11 +4,43 @@
 /* 
 outp : console.log longest sentence in str based of number of words and word count, preseve puntuation.
 rules :
-- sentence end . ! ? (carry return) 
-- any other sign beside space is a word
--  
+- sentence end . ! ? carry return 
+- any other sign counts beside space 
+- 
 
 */
+function longestSentence(txt) {
+  let arr = txt.split('');
+  let lastCounter = 0;
+  let sentenceArr = [];
+  for (let i = 0; i < arr.length; i += 1) {
+    if (arr[i] === '.' || arr[i] === '!' || arr[i] === '?' || arr[i] === '\n') {
+      sentenceArr.push(arr.slice(lastCounter, i + 1).join(''));
+      lastCounter = i + 1
+    }
+  }
+  let [idx, val] = wrdCount(sentenceArr);
+  idx;
+  console.log(sentenceArr[idx]);
+  console.log(`The longest sentence has ${val} words`)
+}
+
+function wrdCount(sentenceArr) {
+  let wordCountArr = [];
+  for (let i of sentenceArr) {
+    // console.log(i.split(' '))
+    wordCountArr.push(i.trim().split(' ').length)
+  }
+  let biggestVal = 0;
+  let idx;
+  for (let i = 0; i < wordCountArr.length; i += 1) {
+    if (wordCountArr[i] > biggestVal) {
+      biggestVal = wordCountArr[i];
+      idx = i
+    }
+  }
+  return [idx, biggestVal]
+}
 
 let longText =
   'Four score and seven years ago our fathers brought forth on this ' +
