@@ -5,21 +5,34 @@ Matrix transposes are not limited to 3x3 matrices, or even square matrices. Any 
 Modify your transpose function from the previous exercise so that it works with any MxN matrix with at least one row and one column. */
 
 const matrix = [
-    [1, 5, 8, 5],
-    [4, 7, 2, 0],
-    [3, 9, 6, 1]
-  ];
-  
-  let newMatrix = transpose(matrix);
-  
-  console.log(newMatrix);      // [[1, 4, 3], [5, 7, 9], [8, 2, 6], [5, 0, 1]]
-  console.log(matrix);         // [[1, 5, 8, 5], [4, 7, 2, 0], [3, 9, 6, 1]]
-  
-  transpose([[1, 2, 3, 4]]);            // [[1], [2], [3], [4]]
-  transpose([[1], [2], [3], [4]]);      // [[1, 2, 3, 4]]
-  transpose([[1]]);                     // [[1]]
-  
-  transpose([[1, 2, 3, 4, 5], [4, 3, 2, 1, 0], [3, 7, 8, 6, 2]]);
+  [1, 5, 8, 5],
+  [4, 7, 2, 0],
+  [3, 9, 6, 1]
+];
+
+function transpose(mtx) {
+  mtx = mtx.map(el => el.slice());
+  let mtxCpy = [];
+  for (let i = 0; i < mtx[0].length; i += 1) {
+    mtxCpy.push([]);
+  }
+
+  for (let r = 0; r < mtx.length; r += 1) {
+    for (c = 0; c < mtx[0].length; c += 1) {
+      mtxCpy[c][r] = mtx[r][c];
+    }
+  }
+  return mtxCpy;
+}
+let newMatrix = transpose(matrix);
+
+console.log(newMatrix);      // [[1, 4, 3], [5, 7, 9], [8, 2, 6], [5, 0, 1]]
+console.log(matrix);         // [[1, 5, 8, 5], [4, 7, 2, 0], [3, 9, 6, 1]]
+
+transpose([[1, 2, 3, 4]]);            // [[1], [2], [3], [4]]
+transpose([[1], [2], [3], [4]]);      // [[1, 2, 3, 4]]
+transpose([[1]]);                     // [[1]]
+
+transpose([[1, 2, 3, 4, 5], [4, 3, 2, 1, 0], [3, 7, 8, 6, 2]]);
   // [[1, 4, 3], [2, 3, 7], [3, 2, 8], [4, 1, 6], [5, 0, 2]]
 
-  
