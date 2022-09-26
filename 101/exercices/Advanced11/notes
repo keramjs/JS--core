@@ -1,4 +1,15 @@
-0,0
-0,1
-0,2
-0,3
+input 2 sorted array
+output 1 sorted array
+
+rules 
+no sort methods
+build array in proper order
+not mutate input
+
+iteruj przez oba arreje element po elemencie
+sprawdz czy element arreja istnieje
+  jesli nie wrzuc do nowego arreja istniejacy element drugiego arraja
+  jesli tak
+    wrzuc do nowego arreja najpier mniejszy a pozniej wiekszy element
+iteruj tak dlugo jak dluzszy arrej 
+
