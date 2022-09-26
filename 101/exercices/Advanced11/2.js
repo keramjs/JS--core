@@ -31,12 +31,27 @@ Take care not to modify the original matrix — your function must produce a new
 
 
 const matrix = [
-    [1, 5, 8],
-    [4, 7, 2],
-    [3, 9, 6]
-  ];
-  
-  let newMatrix = transpose(matrix);
-  
-  console.log(newMatrix);      // [[1, 4, 3], [5, 7, 9], [8, 2, 6]]
-  console.log(matrix);         // [[1, 5, 8], [4, 7, 2], [3, 9, 6]]
+  [1, 5, 8],
+  [4, 7, 2],
+  [3, 9, 6]
+];
+
+function transpose(mtx) {
+  let mtc = []
+  mtx.forEach(el => mtc.push(el.slice()))
+  mtc
+  let mtxCpy = mtx.map(el => []);
+
+  for (let r = 0; r <= 2; r += 1) {
+    for (c = 0; c <= 2; c += 1) {
+      mtxCpy[c][r] = mtc[r][c];
+    }
+  }
+  mtxCpy;
+  return mtxCpy;
+}
+
+let newMatrix = transpose(matrix);
+
+console.log(newMatrix);      // [[1, 4, 3], [5, 7, 9], [8, 2, 6]]
+console.log(matrix);         // [[1, 5, 8], [4, 7, 2], [3, 9, 6]]
