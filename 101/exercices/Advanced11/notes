@@ -10,6 +10,11 @@ iteruj przez oba arreje element po elemencie
 sprawdz czy element arreja istnieje
   jesli nie wrzuc do nowego arreja istniejacy element drugiego arraja
   jesli tak
-    wrzuc do nowego arreja najpier mniejszy a pozniej wiekszy element
+    wrzuc do nowego arreja mniejszy element,
+    sprawdz nastepny element arreja z mniejszym elementem i porownaj z wiekszym elementem obecnej iteracji
+      jesli jest mniejszy to wzruc to nowego arr
 iteruj tak dlugo jak dluzszy arrej 
 
+112223  1222
+
+1
