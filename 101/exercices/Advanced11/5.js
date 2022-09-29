@@ -6,35 +6,13 @@ You may not provide any solution that requires you to sort the result array. You
 
 Your solution should not mutate the input arrays. */
 function merge(arr1, arr2) {
-  let mergeArrMaxLen = arr1.length + arr2.length;
   arr1 = arr1.slice();
   arr2 = arr2.slice();
   let mergeArr = [];
-  let arg1 = arr1.shift();
-  let arg2 = arr2.shift();
-
-  while (mergeArr.length < mergeArrMaxLen) {
-
-    while (arg1 <= arg2) {
-      mergeArr.push(arg1);
-      arg1 = arr1.shift();
-    }
-    while (arg1 >= arg2) {
-      mergeArr.push(arg2);
-      arg2 = arr2.shift();
-    }
-    if (!arg1) {
-      mergeArr.push(arg2);
-      arg2 = arr2.shift();
-    }
-    if (!arg1 && !arg2) break;
-    if (!arg2) {
-      mergeArr.push(arg1);
-      arg1 = arr1.shift();
-    }
-
+  while (arr1.length > 0 && arr2.length > 0) {
+    mergeArr.push((arr1[0] >= arr2[0]) ? arr2.shift() : arr1.shift())
   }
-  return mergeArr;
+  return mergeArr.concat((arr1.length === 0) ? arr2 : arr1)
 }
 
 console.log(merge([1, 5, 9], [2, 6, 8]));      // [1, 2, 5, 6, 8, 9]
