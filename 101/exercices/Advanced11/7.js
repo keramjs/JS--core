@@ -28,14 +28,32 @@ With a linear search, we would have to sequentially go through each of the items
 Using the process described above, the search successfully ends on the second iteration when the middle value is 'Pizzeria'.
 
 Implement a binarySearch function that takes an array and a searchItem as arguments, and returns the index of the searchItem if found, or -1 otherwise. You may assume that the array argument will always be sorted. */
+function binarySearch(arr, item) {
+    let index = 0;
+    while (arr.length) {
+        let mid = Math.trunc(arr.length / 2);
+        if (arr[mid] === item) {
+            return index + arr.indexOf(item);
+        } else if (arr.length === 1) {
+            return -1
+        };
+
+        if (arr[mid] > item) {
+            arr = arr.slice(0, mid);
+        } else {
+            arr = arr.slice(mid);
+            index += mid;
+        }
+    }
+}
 
 let yellowPages = ['Apple Store', 'Bags Galore', 'Bike Store', 'Donuts R Us', 'Eat a Lot', 'Good Food', 'Pasta Place', 'Pizzeria', 'Tiki Lounge', 'Zooper'];
-binarySearch(yellowPages, 'Pizzeria');                   // 7
-binarySearch(yellowPages, 'Apple Store');                // 0
+console.log(binarySearch(yellowPages, 'Pizzeria'));                   // 7
+console.log(binarySearch(yellowPages, 'Apple Store'));                // 0
 
-binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 77);    // -1
-binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 89);    // 7
-binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 5);     // 1
+console.log(binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 77));    // -1
+console.log(binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 89));    // 7
+console.log(binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 5));     // 1
 
-binarySearch(['Alice', 'Bonnie', 'Kim', 'Pete', 'Rachel', 'Sue', 'Tyler'], 'Peter');  // -1
-binarySearch(['Alice', 'Bonnie', 'Kim', 'Pete', 'Rachel', 'Sue', 'Tyler'], 'Tyler');  // 6
+console.log(binarySearch(['Alice', 'Bonnie', 'Kim', 'Pete', 'Rachel', 'Sue', 'Tyler'], 'Peter'));  // -1
+console.log(binarySearch(['Alice', 'Bonnie', 'Kim', 'Pete', 'Rachel', 'Sue', 'Tyler'], 'Tyler'));  // 6
