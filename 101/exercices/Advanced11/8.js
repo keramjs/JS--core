@@ -18,10 +18,41 @@ Write two functions: one that takes a Rational number as an argument, and return
 
 You will need to install the infusion/Fraction.js module with the npm install infusion/Fraction.js command. Read about this package here.
  */
+const Fraction = require('fraction.js')
 
-console.log(egyptian(new Fraction(2, 1))); // -> [1, 2, 3, 6]
-console.log(egyptian(new Fraction(137, 60))); // -> [1, 2, 3, 4, 5]
-console.log(egyptian(new Fraction(3, 1))); // -> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 230, 57960]
+function egyptian(arg) {
+    let denominators = [];
+    let den = 1;
+    while (arg.valueOf() !== 0) {
+        let fr2 = new Fraction(1, den);
+        if (arg.compare(fr2) >= 0) {
+            denominators.push(den);
+            arg = arg.sub(fr2);
+            den += 1;
+        } else {
+            den += 1;
+        }
+    }
+    return denominators
+}
+
+function unegyptian(arg) {
+    let fract = new Fraction()
+    for (let i of arg) {
+        let fract2 = new Fraction(1, i)
+        fract = fract.add(fract2)
+    }
+    return fract.valueOf()
+}
+
+// find bigest fraction contained by arg
+// chececk if nummer is bigger than 1/2
+//  if yes substract this number from arg
+//  
+
+// console.log(egyptian(new Fraction(2, 1))); // -> [1, 2, 3, 6]
+// console.log(egyptian(new Fraction(137, 60))); // -> [1, 2, 3, 4, 5]
+// console.log(egyptian(new Fraction(3, 1))); // -> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 230, 57960]
 
 console.log(unegyptian(egyptian(new Fraction(1, 2)))); // logs 0.5
 console.log(unegyptian(egyptian(new Fraction(3, 4)))); // logs 0.75
