@@ -22,11 +22,11 @@ function lightsOn(switches) {
     count -= 1;
   }
 
-  let lightsOn = [];
+  let lightOn = [];
   for (let i = 0; i < switches; i += 1) {
-    if (arr[i] === 1) lightsOn.push(i + 1);
+    if (arr[i] === 1) lightOn.push(i + 1);
   }
-  return lightsOn;
+  return lightOn;
 }
 
 console.log(lightsOn(5));        // [1, 4]
