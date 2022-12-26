@@ -1,10 +1,10 @@
-function createBook(title, author, read){
+function createBook(title, author, read=false){
     return{
-        Title:title,
-        Author:author,
-        read:false,
+        title,
+        author,
+        read,
         behaviour(){
-            return `${this.Title} was wrritten by ${this.Author} And I ${this.read? 'have' : "havn't"} read this`
+            return `${this.title} was wrritten by ${this.author} And I ${this.read? 'have' : "havn't"} read this`
         },
         readBook(){
             this.read = true;
